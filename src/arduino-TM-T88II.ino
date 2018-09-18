@@ -2,6 +2,7 @@
 
 #include <SoftwareSerial.h>
 
+// get lib from https://github.com/signalwerk/thermalprinter
 #include "thermalprinter.h"
 
 #define ledPin 13
@@ -16,33 +17,33 @@ void setup()
 {
 
   Serial.begin(9600); //open the USB connection too
-  
+
 
   delay(1000);
 
   TM88.start();
-  TM88.println("Hello World");  
-  TM88.println("");  
-  TM88.println("");  
-  
-  
-  TM88.cut();  
+  TM88.println("Hello World");
+  TM88.println("");
+  TM88.println("");
+
+
+  TM88.cut();
 
 
 }
 
 void loop()                     // run over and over again
 {
-  
+
   printStatus = TM88.getStatus();     // get the current status of the TM88 printer
   if (printStatus == 22) {            // if status is 22 then we are good
     Serial.println("printer online");     // debug that we are online
   } else {
     Serial.print("printer offline: ");    // debug that we are offline
-    Serial.println(printStatus);          // debug the returned status code  
-  } 
-  
-  
+    Serial.println(printStatus);          // debug the returned status code
+  }
+
+
   if (Serial.available() > 0) {
     TM88.print(Serial.read());
   }
